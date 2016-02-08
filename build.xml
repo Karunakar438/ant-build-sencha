@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="MyApp" default=".help">
+    <!--
+    The build-impl.xml file imported here contains the guts of the build process. It is
+    a great idea to read that file to understand how the process works, but it is best to
+    limit your changes to this file.
+    -->
+    <import file="${basedir}/.sencha/app/build-impl.xml"/>
+
+    <!--
+    The following targets can be provided to inject logic before and/or after key steps
+    of the build process:
+
+        The "init-local" target is used to initialize properties that may be personalized
+        for the local machine.
+
+            <target name="-before-init-local"/>
+            <target name="-after-init-local"/>
+
+        The "clean" target is used to clean build output from the build.dir.
+
+            <target name="-before-clean"/>
+            <target name="-after-clean"/>
+
+        The general "init" target is used to initialize all other properties, including
+        those provided by Sencha Cmd.
+
+            <target name="-before-init"/>
+            <target name="-after-init"/>
+
+        The "page" target performs the call to Sencha Cmd to build the 'all-classes.js' file.
+
+            <target name="-before-page"/>
+            <target name="-after-page"/>
+
+        The "build" target performs the call to Sencha Cmd to build the application.
+
+            <target name="-before-build"/>
+            <target name="-after-build"/>
+    -->
+
+    <target name="-after-build">
+
+      <!-- I will thrash what we don't need!-->
+      <delete dir="${build.dir}/modern/resources/ext"/>
+      <delete dir="${build.dir}/modern/resources/ext-watermark"/>
+      <delete dir="${build.dir}/modern/resources/images"/>
+      <delete dir="${build.dir}/modern/resources/ext-senchacandy-lib"/>
+      <delete dir="${build.dir}/modern/resources/senchacandy-lib"/>
+      <delete dir="${build.dir}/modern/resources/font-pictos"/>
+      <delete dir="${build.dir}/modern/resources/font-awesome"/>
+      <delete dir="${build.dir}/modern/resources/font-ext"/>
+
+      <delete dir="${build.dir}/classic/resources/ext"/>
+      <delete dir="${build.dir}/classic/resources/ext-watermark"/>
+      <delete dir="${build.dir}/classic/resources/images"/>
+      <delete dir="${build.dir}/classic/resources/ext-senchacandy-lib"/>
+      <delete dir="${build.dir}/classic/resources/senchacandy-lib"/>
+      <delete dir="${build.dir}/classic/resources/font-pictos"/>
+      <delete dir="${build.dir}/classic/resources/font-awesome"/>
+      <delete dir="${build.dir}/classic/resources/font-ext"/>
+
+      <tstamp>
+          <format property="today" pattern="yyyy-MM-dd"/>
+      </tstamp>
+
+      <property
+          name="destinationFolder"
+          value="${build.dir}/../../dist/${app.name}/${today}"
+      />
+
+      <!-- Example, of how to copy the build folder to a different destination-->
+      <copy todir="${destinationFolder}" overwrite="true">
+          <fileset dir="${build.dir}">
+              <include name="**/*" />
+          </fileset>
+      </copy>
+  </target>
+</project>
